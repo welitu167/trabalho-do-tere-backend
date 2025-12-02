@@ -16,6 +16,8 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.3.2",
+    "@stripe/stripe-js": "^1.54.1",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
@@ -23,7 +25,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.19.0",
     "mysql2": "^3.14.3",
-    "stripe": "^11.13.0"
+    "stripe": "^11.18.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
@@ -31,6 +33,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.3.0",
+    "@types/react": "^19.2.7",
     "tsx": "^4.20.4",
     "typescript": "^5.9.2"
   }
