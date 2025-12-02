@@ -6,7 +6,7 @@ import rotasNaoAutenticadas from './rotas/rotas-nao-autenticadas.js';
 import Auth from './middleware/auth.js';
 import errorHandler from './middleware/errorHandler.js';
 import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' });
 
 dotenv.config();
 
