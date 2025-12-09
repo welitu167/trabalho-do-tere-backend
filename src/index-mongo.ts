@@ -1,13 +1,26 @@
 import dotenv from 'dotenv';
+// Load environment variables as early as possible
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import rotasAutenticadas from './rotas/rotas-autenticadas.js';
 import rotasNaoAutenticadas from './rotas/rotas-nao-autenticadas.js';
 import errorHandler from './middleware/errorHandler.js';
 import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' });
 
-dotenv.config();
+// Validate STRIPE_SECRET_KEY to avoid using a publishable key by mistake
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeKey) {
+  console.error('FATAL: STRIPE_SECRET_KEY não está definida. Configure sua Secret Key (começa com "sk_") no arquivo .env.');
+  process.exit(1);
+}
+if (stripeKey.startsWith('pk_')) {
+  console.error('FATAL: STRIPE_SECRET_KEY parece ser uma Publishable Key (pk_...). Use a Secret Key (sk_test_... ou sk_live_...) no backend.');
+  process.exit(1);
+}
+
+const stripe = new Stripe(stripeKey, { apiVersion: '2022-11-15' });
 
 const app = express();
 app.use(cors());
