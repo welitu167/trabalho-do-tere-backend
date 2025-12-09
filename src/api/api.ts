@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Ajuste `baseURL` conforme necessário para seu backend
-  baseURL: process.env.API_BASE_URL || '',
+  baseURL: process.env.API_BASE_URL || 'http://localhost:8000',
   headers: {
     'Content-Type': 'application/json',
   },

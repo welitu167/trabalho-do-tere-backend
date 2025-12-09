@@ -17,12 +17,17 @@ function Auth(req:RequestAuth,res:Response,next:NextFunction){
             console.log(err)
             return res.status(401).json({mensagem:"Token inválido!"})
         }
-        if(!decoded || typeof decoded === 'string' || !('usuarioId' in decoded))
+        if(!decoded || typeof decoded === 'string')
             return res.status(401).json({mensagem:"Payload inválido!"})
 
-    req.usuarioId = decoded.usuarioId;
-    // suporta tanto 'role' quanto 'tipo' no payload
-    req.tipo = (decoded.tipo ?? decoded.role ?? 'user').toString().toUpperCase();
+        // aceitar várias formas de identificar o id do usuário no payload JWT
+        const usuarioIdFromPayload = decoded.usuarioId ?? decoded.userId ?? decoded.id ?? decoded.sub;
+        if(!usuarioIdFromPayload)
+            return res.status(401).json({mensagem:"Payload inválido: usuarioId ausente"})
+
+        req.usuarioId = String(usuarioIdFromPayload);
+        // suporta tanto 'role' quanto 'tipo' no payload
+        req.tipo = (decoded.tipo ?? decoded.role ?? 'user').toString().toUpperCase();
         next()
 
     })
