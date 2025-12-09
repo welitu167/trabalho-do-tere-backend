@@ -25,8 +25,8 @@ rotasAutenticadas.get('/admin/carrinhos', Auth, adminAuth, asyncHandler((req, re
 // ADMIN: Pode CRIAR (POST), EDITAR (PUT), DELETAR (DELETE)
 // ============================================
 
-// Listar produtos (USER e ADMIN)
-rotasAutenticadas.get("/produtos", Auth, asyncHandler((req, res, next) => produtoController.listar(req, res)));
+// Listar produtos (USER e ADMIN) - REMOVIDO, veja rotas-nao-autenticadas.ts
+// rotasAutenticadas.get("/produtos", Auth, asyncHandler((req, res, next) => produtoController.listar(req, res)));
 
 // Criar produto (ADMIN apenas)
 rotasAutenticadas.post("/produtos", Auth, adminAuth, asyncHandler((req, res, next) => produtoController.adicionar(req, res)));

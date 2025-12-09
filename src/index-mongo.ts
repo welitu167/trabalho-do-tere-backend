@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import rotasAutenticadas from './rotas/rotas-autenticadas.js';
 import rotasNaoAutenticadas from './rotas/rotas-nao-autenticadas.js';
-import Auth from './middleware/auth.js';
 import errorHandler from './middleware/errorHandler.js';
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' });
@@ -15,7 +14,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use(rotasNaoAutenticadas);
-app.use(Auth);
 app.use(rotasAutenticadas);
 
 // Middleware de tratamento de erros, verificar erros e validações(DEVE ser o ÚLTIMO)

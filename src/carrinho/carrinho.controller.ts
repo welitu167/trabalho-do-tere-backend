@@ -19,7 +19,7 @@ interface Collection<T> {
 }
 
 interface Carrinho {
-    usuarioId: string;
+    usuarioId: string;                  
     itens: ItemCarrinho[];
     dataAtualizacao: Date;
     total: number;
@@ -46,7 +46,7 @@ class CarrinhoController {
 
         //Buscar o produto no banco de dados
         const produto = await db.collection<Produto>('produtos')
-                        .findOne({ _id: ObjectId.createFromHexString(produtoId)});
+                        .findOne({ _id: new ObjectId(produtoId)}); // <-- alterado (usar new ObjectId)
         if(!produto)
             return res.status(404).json({mensagem: 'Produto não encontrado'});
         //Pegar o preço do produto
