@@ -29,6 +29,15 @@ app.use(express.json());
 app.use(rotasNaoAutenticadas);
 app.use(rotasAutenticadas);
 
+// Expose publishable key to frontend to avoid mismatched key issues
+app.get('/config', (req, res) => {
+  const publishable = process.env.STRIPE_PUBLISHABLE_KEY || process.env.VITE_STRIPE_PUBLIC_KEY || null;
+  if (!publishable) {
+    return res.status(500).json({ mensagem: 'Publishable key não configurada no backend.' });
+  }
+  return res.json({ publishableKey: publishable });
+});
+
 // Middleware de tratamento de erros, verificar erros e validações(DEVE ser o ÚLTIMO)
 app.use(errorHandler);
 
