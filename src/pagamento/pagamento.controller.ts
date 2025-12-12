@@ -16,6 +16,16 @@ class PagamentoController {
         payment_method_types: ['card'],
       });
 
+      // Debug: log id and client_secret to help diagnose frontend problems
+      try {
+        console.debug('Stripe PaymentIntent criado:', {
+          id: paymentIntent.id,
+          client_secret: paymentIntent.client_secret ? '[REDACTED]' : null,
+        });
+      } catch (e) {
+        // ignore logging errors
+      }
+
       return res.status(200).json({ clientSecret: paymentIntent.client_secret, id: paymentIntent.id });
     } catch (err) {
       if (err instanceof Error) return res.status(400).json({ mensagem: err.message });
